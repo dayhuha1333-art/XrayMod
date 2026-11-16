@@ -1,0 +1,39 @@
+plugins {
+    id 'net.minecraftforge.gradle.forge' version '2.3'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven {
+        url = "https://maven.cleanroommc.org"
+    }
+}
+
+dependencies {
+    implementation 'net.minecraftforge:forge:14.23.5.2860'
+    implementation 'zone.rong:mixinbooter:10.7'
+}
+
+mixinbooter {
+    annotationProcessor 'zone.rong:mixinbooter:10.7'
+}
+
+processResources {
+    from('src/main/resources') {
+        include 'mcmod.info'
+        include 'mixins.xraymod.json'
+    }
+}
+
+client {
+    registerDependencies(deps -> {
+        deps.add('net.minecraftforge:forge:14.23.5.2860')
+    })
+}
+
+task copyJar(type: Copy) {
+    from 'build/libs/xraymod.jar'
+    into 'path/to/mods/'
+}
